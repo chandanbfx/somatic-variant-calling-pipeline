@@ -1,0 +1,11 @@
+name: somatic_annotation
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - snpeff=5.1d          # Latest with GRCh38 support
+  - snpsift=5.1d         # Matching version
+  - vep=109.3            # Latest Ensembl VEP
+  - funcotator=4.4.0.0   # Matches GATK version
+  - perl=5.32.1          # Required for VEP
+  - r-base=4.3.1         # For any R-based tools

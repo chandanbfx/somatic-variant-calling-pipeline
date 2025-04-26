@@ -1,0 +1,11 @@
+name: somatic_alignment
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bwa=0.7.17           # Latest stable
+  - samtools=1.18        # Modern version
+  - gatk4=4.4.0.0        # Latest GATK
+  - pysam=0.21.0         # For BAM processing
+  - python=3.10          # Modern Python

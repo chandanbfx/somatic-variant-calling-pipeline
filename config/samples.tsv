@@ -1,0 +1,5 @@
+sample_id	sample_type	bam_prefix	normal_name
+HCC1144_tumor	tumor	data/HCC1144_T_clean	-
+HCC1144_normal	normal	data/HCC1144_N_clean	HCC1144_BL
+HCC1143_tumor	tumor	data/hcc1143_T_clean	-
+HCC1143_normal	normal	data/hcc1143_N_clean	HCC1143_BL

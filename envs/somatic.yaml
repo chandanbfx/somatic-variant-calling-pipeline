@@ -1,0 +1,9 @@
+name: somatic_calling
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - gatk4=4.4.0.0        # Latest stable
+  - pandas=2.1.4         # For wrapper scripts
+  - numpy=1.26.0         # Required by pandas
+  - openjdk=17.0.8       # Java LTS version

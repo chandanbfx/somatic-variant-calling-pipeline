@@ -1,0 +1,31 @@
+
+# Snakemake and Conda environment
+.snakemake/
+.env/
+.venv/
+*.snakemake_profile
+
+# Logs and outputs
+logs/
+*.log
+*.tmp
+*.bak
+*.err
+*.out
+
+# Large input and output files
+*.bam
+*.bai
+*.vcf
+*.vcf.gz
+*.tbi
+*.tar.gz
+
+# Reference and resource files
+reference/
+database/
+resources/
+
+# System files
+.DS_Store
+Thumbs.db

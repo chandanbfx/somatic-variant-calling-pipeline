@@ -1,0 +1,476 @@
+        sample_id sample_type            bam_prefix normal_name
+0   HCC1144_tumor       tumor  data/HCC1144_T_clean           -
+1  HCC1144_normal      normal  data/HCC1144_N_clean  HCC1144_BL
+2   HCC1143_tumor       tumor  data/hcc1143_T_clean           -
+3  HCC1143_normal      normal  data/hcc1143_N_clean  HCC1143_BL
+Normal: {'HCC1144_normal': 'data/HCC1144_N_clean', 'HCC1143_normal': 'data/hcc1143_N_clean'}
+Tumor: {'HCC1144_tumor': 'data/HCC1144_T_clean', 'HCC1143_tumor': 'data/hcc1143_T_clean'}
+Normal IDs: ['HCC1144_normal', 'HCC1143_normal']
+Tumor IDs: ['HCC1144_tumor', 'HCC1143_tumor']
+Normal names (for mutect2): ['HCC1144_BL', 'HCC1143_BL']
+host: chandan-Inspiron-15-3520
+Building DAG of jobs...
+Job stats:
+job                          count
+-------------------------  -------
+all                              1
+apply_recalibration              2
+apply_recalibrationNormal        2
+base_recalibrationNormal         2
+base_recalibrationTumor          2
+calculate_contamination          2
+filter_mutect_calls              2
+funcotator                       2
+generate_stats                   1
+get_pileup_summaries             2
+learn_read_orientation           1
+mark_adapters_normal             2
+mark_adapters_tumor              2
+mark_duplicates_normal           2
+mark_duplicates_tumor            2
+mutect2                          1
+snpsift_clinvar                  2
+sort_coordinateNormal            2
+sort_coordinateTumor             2
+sort_queryname_normal            2
+sort_queryname_tumor             2
+total                           38
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_queryname_tumor:
+    input: data/HCC1144_T_clean.bam
+    output: sorted_reads/sorted.HCC1144_tumor.bam
+    jobid: 9
+    reason: Missing output files: sorted_reads/sorted.HCC1144_tumor.bam
+    wildcards: tumor=HCC1144_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_queryname_normal:
+    input: data/hcc1143_N_clean.bam
+    output: sorted_reads/sorted.HCC1143_normal.bam
+    jobid: 27
+    reason: Missing output files: sorted_reads/sorted.HCC1143_normal.bam
+    wildcards: normal=HCC1143_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_queryname_normal:
+    input: data/HCC1144_N_clean.bam
+    output: sorted_reads/sorted.HCC1144_normal.bam
+    jobid: 21
+    reason: Missing output files: sorted_reads/sorted.HCC1144_normal.bam
+    wildcards: normal=HCC1144_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_queryname_tumor:
+    input: data/hcc1143_T_clean.bam
+    output: sorted_reads/sorted.HCC1143_tumor.bam
+    jobid: 15
+    reason: Missing output files: sorted_reads/sorted.HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_adapters_tumor:
+    input: sorted_reads/sorted.HCC1144_tumor.bam
+    output: sorted_reads/tumor/MarkAdapter_HCC1144_tumor.bam, logs/MarkAdap/HCC1144_tumor.metrics.txt
+    log: logs/MarkAdap/HCC1144_tumor.log
+    jobid: 8
+    reason: Missing output files: sorted_reads/tumor/MarkAdapter_HCC1144_tumor.bam; Input files updated by another job: sorted_reads/sorted.HCC1144_tumor.bam
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_adapters_normal:
+    input: sorted_reads/sorted.HCC1144_normal.bam
+    output: sorted_reads/normal/MarkAdapter_HCC1144_normal.bam, logs/MarkAdap/HCC1144_normal.metrics.txt
+    log: logs/MarkAdap/HCC1144_normal.log
+    jobid: 20
+    reason: Missing output files: sorted_reads/normal/MarkAdapter_HCC1144_normal.bam; Input files updated by another job: sorted_reads/sorted.HCC1144_normal.bam
+    wildcards: normal=HCC1144_normal
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_adapters_normal:
+    input: sorted_reads/sorted.HCC1143_normal.bam
+    output: sorted_reads/normal/MarkAdapter_HCC1143_normal.bam, logs/MarkAdap/HCC1143_normal.metrics.txt
+    log: logs/MarkAdap/HCC1143_normal.log
+    jobid: 26
+    reason: Missing output files: sorted_reads/normal/MarkAdapter_HCC1143_normal.bam; Input files updated by another job: sorted_reads/sorted.HCC1143_normal.bam
+    wildcards: normal=HCC1143_normal
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_adapters_tumor:
+    input: sorted_reads/sorted.HCC1143_tumor.bam
+    output: sorted_reads/tumor/MarkAdapter_HCC1143_tumor.bam, logs/MarkAdap/HCC1143_tumor.metrics.txt
+    log: logs/MarkAdap/HCC1143_tumor.log
+    jobid: 14
+    reason: Missing output files: sorted_reads/tumor/MarkAdapter_HCC1143_tumor.bam; Input files updated by another job: sorted_reads/sorted.HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_duplicates_tumor:
+    input: sorted_reads/tumor/MarkAdapter_HCC1144_tumor.bam
+    output: sorted_reads/tumor/RmDuplicates_HCC1144_tumor.bam, logs/MarkDup/HCC1144_tumor.metrics.txt
+    log: logs/MarkDup/HCC1144_tumor.log
+    jobid: 7
+    reason: Missing output files: sorted_reads/tumor/RmDuplicates_HCC1144_tumor.bam; Input files updated by another job: sorted_reads/tumor/MarkAdapter_HCC1144_tumor.bam
+    wildcards: tumor=HCC1144_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_duplicates_normal:
+    input: sorted_reads/normal/MarkAdapter_HCC1143_normal.bam
+    output: sorted_reads/normal/RmDuplicates_HCC1143_normal.bam, logs/MarkDup/HCC1143_normal.metrics.txt
+    log: logs/MarkDup/HCC1143_normal.log
+    jobid: 25
+    reason: Missing output files: sorted_reads/normal/RmDuplicates_HCC1143_normal.bam; Input files updated by another job: sorted_reads/normal/MarkAdapter_HCC1143_normal.bam
+    wildcards: normal=HCC1143_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_duplicates_tumor:
+    input: sorted_reads/tumor/MarkAdapter_HCC1143_tumor.bam
+    output: sorted_reads/tumor/RmDuplicates_HCC1143_tumor.bam, logs/MarkDup/HCC1143_tumor.metrics.txt
+    log: logs/MarkDup/HCC1143_tumor.log
+    jobid: 13
+    reason: Missing output files: sorted_reads/tumor/RmDuplicates_HCC1143_tumor.bam; Input files updated by another job: sorted_reads/tumor/MarkAdapter_HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mark_duplicates_normal:
+    input: sorted_reads/normal/MarkAdapter_HCC1144_normal.bam
+    output: sorted_reads/normal/RmDuplicates_HCC1144_normal.bam, logs/MarkDup/HCC1144_normal.metrics.txt
+    log: logs/MarkDup/HCC1144_normal.log
+    jobid: 19
+    reason: Missing output files: sorted_reads/normal/RmDuplicates_HCC1144_normal.bam; Input files updated by another job: sorted_reads/normal/MarkAdapter_HCC1144_normal.bam
+    wildcards: normal=HCC1144_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_coordinateNormal:
+    input: sorted_reads/normal/RmDuplicates_HCC1143_normal.bam
+    output: processed/normal/RmDup.Sorted.HCC1143_normal.bam
+    jobid: 24
+    reason: Missing output files: processed/normal/RmDup.Sorted.HCC1143_normal.bam; Input files updated by another job: sorted_reads/normal/RmDuplicates_HCC1143_normal.bam
+    wildcards: normal=HCC1143_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_coordinateTumor:
+    input: sorted_reads/tumor/RmDuplicates_HCC1143_tumor.bam
+    output: processed/tumor/RmDup.Sorted.HCC1143_tumor.bam
+    jobid: 12
+    reason: Missing output files: processed/tumor/RmDup.Sorted.HCC1143_tumor.bam; Input files updated by another job: sorted_reads/tumor/RmDuplicates_HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_coordinateNormal:
+    input: sorted_reads/normal/RmDuplicates_HCC1144_normal.bam
+    output: processed/normal/RmDup.Sorted.HCC1144_normal.bam
+    jobid: 18
+    reason: Missing output files: processed/normal/RmDup.Sorted.HCC1144_normal.bam; Input files updated by another job: sorted_reads/normal/RmDuplicates_HCC1144_normal.bam
+    wildcards: normal=HCC1144_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule sort_coordinateTumor:
+    input: sorted_reads/tumor/RmDuplicates_HCC1144_tumor.bam
+    output: processed/tumor/RmDup.Sorted.HCC1144_tumor.bam
+    jobid: 6
+    reason: Missing output files: processed/tumor/RmDup.Sorted.HCC1144_tumor.bam; Input files updated by another job: sorted_reads/tumor/RmDuplicates_HCC1144_tumor.bam
+    wildcards: tumor=HCC1144_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule base_recalibrationNormal:
+    input: processed/normal/RmDup.Sorted.HCC1143_normal.bam, database/00-common_all.vcf.gz, reference/chr1.fa
+    output: processed/normal/HCC1143_normal.recal.table
+    jobid: 28
+    reason: Missing output files: processed/normal/HCC1143_normal.recal.table; Input files updated by another job: processed/normal/RmDup.Sorted.HCC1143_normal.bam
+    wildcards: normal=HCC1143_normal
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule base_recalibrationTumor:
+    input: processed/tumor/RmDup.Sorted.HCC1143_tumor.bam, database/00-common_all.vcf.gz, reference/chr1.fa
+    output: processed/tumor/HCC1143_tumor.recal.table
+    jobid: 16
+    reason: Missing output files: processed/tumor/HCC1143_tumor.recal.table; Input files updated by another job: processed/tumor/RmDup.Sorted.HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule base_recalibrationNormal:
+    input: processed/normal/RmDup.Sorted.HCC1144_normal.bam, database/00-common_all.vcf.gz, reference/chr1.fa
+    output: processed/normal/HCC1144_normal.recal.table
+    jobid: 22
+    reason: Missing output files: processed/normal/HCC1144_normal.recal.table; Input files updated by another job: processed/normal/RmDup.Sorted.HCC1144_normal.bam
+    wildcards: normal=HCC1144_normal
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule base_recalibrationTumor:
+    input: processed/tumor/RmDup.Sorted.HCC1144_tumor.bam, database/00-common_all.vcf.gz, reference/chr1.fa
+    output: processed/tumor/HCC1144_tumor.recal.table
+    jobid: 10
+    reason: Missing output files: processed/tumor/HCC1144_tumor.recal.table; Input files updated by another job: processed/tumor/RmDup.Sorted.HCC1144_tumor.bam
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule apply_recalibrationNormal:
+    input: reference/chr1.fa, processed/normal/RmDup.Sorted.HCC1143_normal.bam, processed/normal/HCC1143_normal.recal.table
+    output: Analysis_ready/normal/Recalibrated_processed_HCC1143_normal.bam, Analysis_ready/normal/Recalibrated_processed_HCC1143_normal.bam.bai
+    log: logs/gatkApplyBQSR/HCC1143_normal.log
+    jobid: 23
+    reason: Missing output files: Analysis_ready/normal/Recalibrated_processed_HCC1143_normal.bam; Input files updated by another job: processed/normal/HCC1143_normal.recal.table, processed/normal/RmDup.Sorted.HCC1143_normal.bam
+    wildcards: normal=HCC1143_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule apply_recalibration:
+    input: reference/chr1.fa, processed/tumor/RmDup.Sorted.HCC1143_tumor.bam, processed/tumor/HCC1143_tumor.recal.table
+    output: Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam, Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam.bai
+    log: logs/gatkApplyBQSR/HCC1143_tumor.log
+    jobid: 11
+    reason: Missing output files: Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam; Input files updated by another job: processed/tumor/HCC1143_tumor.recal.table, processed/tumor/RmDup.Sorted.HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule apply_recalibrationNormal:
+    input: reference/chr1.fa, processed/normal/RmDup.Sorted.HCC1144_normal.bam, processed/normal/HCC1144_normal.recal.table
+    output: Analysis_ready/normal/Recalibrated_processed_HCC1144_normal.bam, Analysis_ready/normal/Recalibrated_processed_HCC1144_normal.bam.bai
+    log: logs/gatkApplyBQSR/HCC1144_normal.log
+    jobid: 17
+    reason: Missing output files: Analysis_ready/normal/Recalibrated_processed_HCC1144_normal.bam; Input files updated by another job: processed/normal/HCC1144_normal.recal.table, processed/normal/RmDup.Sorted.HCC1144_normal.bam
+    wildcards: normal=HCC1144_normal
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule apply_recalibration:
+    input: reference/chr1.fa, processed/tumor/RmDup.Sorted.HCC1144_tumor.bam, processed/tumor/HCC1144_tumor.recal.table
+    output: Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam, Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam.bai
+    log: logs/gatkApplyBQSR/HCC1144_tumor.log
+    jobid: 5
+    reason: Missing output files: Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam; Input files updated by another job: processed/tumor/RmDup.Sorted.HCC1144_tumor.bam, processed/tumor/HCC1144_tumor.recal.table
+    wildcards: tumor=HCC1144_tumor
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+
+[Sat Apr 26 00:11:36 2025]
+rule get_pileup_summaries:
+    input: Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam, resources/small_exac_common_3.hg38.vcf.gz
+    output: raw_variants/HCC1143_tumor.pileup.table
+    jobid: 36
+    reason: Missing output files: raw_variants/HCC1143_tumor.pileup.table; Input files updated by another job: Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule get_pileup_summaries:
+    input: Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam, resources/small_exac_common_3.hg38.vcf.gz
+    output: raw_variants/HCC1144_tumor.pileup.table
+    jobid: 30
+    reason: Missing output files: raw_variants/HCC1144_tumor.pileup.table; Input files updated by another job: Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule mutect2:
+    input: Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam, Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam, Analysis_ready/normal/Recalibrated_processed_HCC1144_normal.bam, Analysis_ready/normal/Recalibrated_processed_HCC1143_normal.bam, reference/chr1.fa, resources/1000g_pon.hg38.vcf.gz, resources/af-only-gnomad.hg38.vcf.gz, chr17plus.interval_list
+    output: raw_variants/all.rawvcf.gz, raw_variants/all.f1r2.tar.gz, raw_variants/all.rawvcf.gz.stats
+    log: logs/mutect2/joint_call.log
+    jobid: 4
+    reason: Missing output files: raw_variants/all.rawvcf.gz, raw_variants/all.f1r2.tar.gz; Input files updated by another job: Analysis_ready/normal/Recalibrated_processed_HCC1143_normal.bam, Analysis_ready/normal/Recalibrated_processed_HCC1144_normal.bam, Analysis_ready/tumor/Recalibrated_processed_HCC1143_tumor.bam, Analysis_ready/tumor/Recalibrated_processed_HCC1144_tumor.bam
+    threads: 4
+    resources: tmpdir=<TBD>, mem_mb=130000, mem_mib=123978, disk_mb=100000, disk_mib=95368
+
+[Sat Apr 26 00:11:36 2025]
+rule calculate_contamination:
+    input: raw_variants/HCC1144_tumor.pileup.table
+    output: raw_variants/HCC1144_tumor.calculate.table, raw_variants/HCC1144_tumor.segments.table
+    jobid: 29
+    reason: Missing output files: raw_variants/HCC1144_tumor.calculate.table, raw_variants/HCC1144_tumor.segments.table; Input files updated by another job: raw_variants/HCC1144_tumor.pileup.table
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule learn_read_orientation:
+    input: raw_variants/all.f1r2.tar.gz
+    output: raw_variants/all.model.tar.gz
+    jobid: 31
+    reason: Missing output files: raw_variants/all.model.tar.gz; Input files updated by another job: raw_variants/all.f1r2.tar.gz
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule calculate_contamination:
+    input: raw_variants/HCC1143_tumor.pileup.table
+    output: raw_variants/HCC1143_tumor.calculate.table, raw_variants/HCC1143_tumor.segments.table
+    jobid: 35
+    reason: Missing output files: raw_variants/HCC1143_tumor.segments.table, raw_variants/HCC1143_tumor.calculate.table; Input files updated by another job: raw_variants/HCC1143_tumor.pileup.table
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule filter_mutect_calls:
+    input: raw_variants/all.rawvcf.gz, raw_variants/HCC1144_tumor.calculate.table, raw_variants/HCC1144_tumor.segments.table, raw_variants/all.model.tar.gz
+    output: filtered_variants/HCC1144_tumor.filtered_vcf.gz
+    jobid: 3
+    reason: Missing output files: filtered_variants/HCC1144_tumor.filtered_vcf.gz; Input files updated by another job: raw_variants/all.model.tar.gz, raw_variants/all.rawvcf.gz, raw_variants/HCC1144_tumor.calculate.table, raw_variants/HCC1144_tumor.segments.table
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule filter_mutect_calls:
+    input: raw_variants/all.rawvcf.gz, raw_variants/HCC1143_tumor.calculate.table, raw_variants/HCC1143_tumor.segments.table, raw_variants/all.model.tar.gz
+    output: filtered_variants/HCC1143_tumor.filtered_vcf.gz
+    jobid: 34
+    reason: Missing output files: filtered_variants/HCC1143_tumor.filtered_vcf.gz; Input files updated by another job: raw_variants/all.model.tar.gz, raw_variants/all.rawvcf.gz, raw_variants/HCC1143_tumor.segments.table, raw_variants/HCC1143_tumor.calculate.table
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule funcotator:
+    input: filtered_variants/HCC1144_tumor.filtered_vcf.gz, resources/funcotator_dataSources.v1.8.hg38.20230908s.tar.gz
+    output: annotation/HCC1144_tumor.AnnFuncotator.vcf
+    jobid: 2
+    reason: Missing output files: annotation/HCC1144_tumor.AnnFuncotator.vcf; Input files updated by another job: filtered_variants/HCC1144_tumor.filtered_vcf.gz
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule funcotator:
+    input: filtered_variants/HCC1143_tumor.filtered_vcf.gz, resources/funcotator_dataSources.v1.8.hg38.20230908s.tar.gz
+    output: annotation/HCC1143_tumor.AnnFuncotator.vcf
+    jobid: 33
+    reason: Missing output files: annotation/HCC1143_tumor.AnnFuncotator.vcf; Input files updated by another job: filtered_variants/HCC1143_tumor.filtered_vcf.gz
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule snpsift_clinvar:
+    input: annotation/HCC1144_tumor.AnnFuncotator.vcf, database/clinvar_20250421.vcf.gz
+    output: annotation/HCC1144_tumor.AnnFun_clinVar.vcf
+    jobid: 1
+    reason: Missing output files: annotation/HCC1144_tumor.AnnFun_clinVar.vcf; Input files updated by another job: annotation/HCC1144_tumor.AnnFuncotator.vcf
+    wildcards: tumor=HCC1144_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule snpsift_clinvar:
+    input: annotation/HCC1143_tumor.AnnFuncotator.vcf, database/clinvar_20250421.vcf.gz
+    output: annotation/HCC1143_tumor.AnnFun_clinVar.vcf
+    jobid: 32
+    reason: Missing output files: annotation/HCC1143_tumor.AnnFun_clinVar.vcf; Input files updated by another job: annotation/HCC1143_tumor.AnnFuncotator.vcf
+    wildcards: tumor=HCC1143_tumor
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule generate_stats:
+    input: raw_variants/all.rawvcf.gz, filtered_variants/HCC1144_tumor.filtered_vcf.gz, filtered_variants/HCC1143_tumor.filtered_vcf.gz, annotation/HCC1144_tumor.AnnFun_clinVar.vcf, annotation/HCC1143_tumor.AnnFun_clinVar.vcf
+    output: variants/Allvcf_stats.txt
+    jobid: 37
+    reason: Missing output files: variants/Allvcf_stats.txt; Input files updated by another job: annotation/HCC1144_tumor.AnnFun_clinVar.vcf, filtered_variants/HCC1143_tumor.filtered_vcf.gz, filtered_variants/HCC1144_tumor.filtered_vcf.gz, annotation/HCC1143_tumor.AnnFun_clinVar.vcf, raw_variants/all.rawvcf.gz
+    resources: tmpdir=<TBD>
+
+
+[Sat Apr 26 00:11:36 2025]
+rule all:
+    input: annotation/HCC1144_tumor.AnnFun_clinVar.vcf, annotation/HCC1143_tumor.AnnFun_clinVar.vcf, variants/Allvcf_stats.txt
+    jobid: 0
+    reason: Input files updated by another job: annotation/HCC1143_tumor.AnnFun_clinVar.vcf, annotation/HCC1144_tumor.AnnFun_clinVar.vcf, variants/Allvcf_stats.txt
+    resources: tmpdir=<TBD>
+
+Job stats:
+job                          count
+-------------------------  -------
+all                              1
+apply_recalibration              2
+apply_recalibrationNormal        2
+base_recalibrationNormal         2
+base_recalibrationTumor          2
+calculate_contamination          2
+filter_mutect_calls              2
+funcotator                       2
+generate_stats                   1
+get_pileup_summaries             2
+learn_read_orientation           1
+mark_adapters_normal             2
+mark_adapters_tumor              2
+mark_duplicates_normal           2
+mark_duplicates_tumor            2
+mutect2                          1
+snpsift_clinvar                  2
+sort_coordinateNormal            2
+sort_coordinateTumor             2
+sort_queryname_normal            2
+sort_queryname_tumor             2
+total                           38
+
+Reasons:
+    (check individual jobs above for details)
+    input files updated by another job:
+        all, apply_recalibration, apply_recalibrationNormal, base_recalibrationNormal, base_recalibrationTumor, calculate_contamination, filter_mutect_calls, funcotator, generate_stats, get_pileup_summaries, learn_read_orientation, mark_adapters_normal, mark_adapters_tumor, mark_duplicates_normal, mark_duplicates_tumor, mutect2, snpsift_clinvar, sort_coordinateNormal, sort_coordinateTumor
+    output files have to be generated:
+        apply_recalibration, apply_recalibrationNormal, base_recalibrationNormal, base_recalibrationTumor, calculate_contamination, filter_mutect_calls, funcotator, generate_stats, get_pileup_summaries, learn_read_orientation, mark_adapters_normal, mark_adapters_tumor, mark_duplicates_normal, mark_duplicates_tumor, mutect2, snpsift_clinvar, sort_coordinateNormal, sort_coordinateTumor, sort_queryname_normal, sort_queryname_tumor
+
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
