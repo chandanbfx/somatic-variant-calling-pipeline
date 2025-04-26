@@ -10,10 +10,12 @@ rule sort_coordinateNormal:
         mem_mb=config["gatkRam"], 
         disk_mb=config["gatkDisk"]
     threads: config.get("gatkThreads")
+    params:
+        mem_gb=lambda wildcards, resources: int(resources.mem_mb) // 1024
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk SortSam -I {input.bam} -O {output} -SO coordinate"
+        "gatk --java-options -Xmx{params.mem_gb}G SortSam -I {input.bam} -O {output} -SO coordinate"
 
 rule base_recalibrationNormal:
     input:
@@ -22,10 +24,16 @@ rule base_recalibrationNormal:
         fa="reference/chr1.fa"
     output:
         table="processed/normal/{normal}.recal.table"
+    resources:  
+        mem_mb=config["gatkRam"], 
+        disk_mb=config["gatkDisk"]
+    threads: config.get("gatkThreads")
+    params:
+        mem_gb=lambda wildcards, resources: int(resources.mem_mb) // 1024
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk BaseRecalibrator -I {input.bam} -R {input.fa} "
+        "gatk --java-options -Xmx{params.mem_gb}G BaseRecalibrator -I {input.bam} -R {input.fa} "
         "--known-sites {input.known} -O {output.table}"
 
 rule apply_recalibrationNormal:
@@ -40,12 +48,14 @@ rule apply_recalibrationNormal:
         mem_mb=config["gatkRam"], 
         disk_mb=config["gatkDisk"]
     threads: config.get("gatkThreads")
+    params:
+        mem_gb=lambda wildcards, resources: int(resources.mem_mb) // 1024
     conda:
         "envs/somatic.yaml"
     log:
         "logs/gatkApplyBQSR/{normal}.log"
     shell:
-        "gatk --java-options -Xmx56G ApplyBQSR "
+        "gatk --java-options -Xmx{params.mem_gb}G ApplyBQSR "
         "-I {input.bam} -R {input.fa} "
         "--bqsr-recal-file {input.table} "
         "-O {output.file}"
@@ -59,10 +69,12 @@ rule sort_coordinateTumor:
         mem_mb=config["gatkRam"], 
         disk_mb=config["gatkDisk"]
     threads: config.get("gatkThreads")
+    params:
+        mem_gb=lambda wildcards, resources: int(resources.mem_mb) // 1024
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk SortSam -I {input.bam} -O {output} -SO coordinate"
+        "gatk --java-options -Xmx{params.mem_gb}G SortSam -I {input.bam} -O {output} -SO coordinate"
 
 rule base_recalibrationTumor:
     input:
@@ -71,10 +83,16 @@ rule base_recalibrationTumor:
         fa="reference/chr1.fa"
     output:
         table="processed/tumor/{tumor}.recal.table"
+    resources: 
+        mem_mb=config["gatkRam"], 
+        disk_mb=config["gatkDisk"]
+    threads: config.get("gatkThreads")
+    params:
+        mem_gb=lambda wildcards, resources: int(resources.mem_mb) // 1024
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk BaseRecalibrator -I {input.bam} -R {input.fa} "
+        "gatk --java-options -Xmx{params.mem_gb}G BaseRecalibrator -I {input.bam} -R {input.fa} "
         "--known-sites {input.known} -O {output.table}"
 
 rule apply_recalibration:
@@ -89,12 +107,14 @@ rule apply_recalibration:
         mem_mb=config["gatkRam"], 
         disk_mb=config["gatkDisk"]
     threads: config.get("gatkThreads")
+    params:
+        mem_gb=lambda wildcards, resources: int(resources.mem_mb) // 1024
     conda:
         "envs/somatic.yaml"
     log:
         "logs/gatkApplyBQSR/{tumor}.log"
     shell:
-        "gatk --java-options -Xmx56G ApplyBQSR "
+        "gatk --java-options -Xmx{params.mem_gb}G ApplyBQSR "
         "-I {input.bam} -R {input.fa} "
         "--bqsr-recal-file {input.table} "
         "-O {output.file}"

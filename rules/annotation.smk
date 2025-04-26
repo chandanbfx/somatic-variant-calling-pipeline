@@ -18,7 +18,7 @@ rule funcotator:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk Funcotator --java-options -Xmx{params.mem_gb}G -V {input.vcf} --data-sources-path {params.resources} -O {params.uncompressed_vcf} --output-file-format VCF && bgzip -c {params.uncompressed_vcf} > {output.vcf} && tabix -p vcf {output.vcf} && rm -f {params.uncompressed_vcf} "
+        "gatk --java-options -Xmx{params.mem_gb}G Funcotator  -V {input.vcf} --data-sources-path {params.resources} -O {params.uncompressed_vcf} --output-file-format VCF && bgzip -c {params.uncompressed_vcf} > {output.vcf} && tabix -p vcf {output.vcf} && rm -f {params.uncompressed_vcf} "
 
 rule snpsift_dbsnp:
     input:

@@ -15,7 +15,7 @@ rule sort_queryname_normal:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk SortSam --java-options -Xmx{params.mem_gb}G -I {input.normalBam} -O {output} -SO queryname"
+        "gatk --java-options -Xmx{params.mem_gb}G SortSam -I {input.normalBam} -O {output} -SO queryname"
 
 rule mark_adapters_normal:
     input:
@@ -33,7 +33,7 @@ rule mark_adapters_normal:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk MarkIlluminaAdapters --java-options -Xmx{params.mem_gb}G -I {input} -O {output.bam} -M {output.metrics}"
+        "gatk --java-options -Xmx{params.mem_gb}G  MarkIlluminaAdapters -I {input} -O {output.bam} -M {output.metrics}"
 
 rule mark_duplicates_normal:
     input:
@@ -53,7 +53,7 @@ rule mark_duplicates_normal:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk MarkDuplicates --java-options -Xmx{params.mem_gb}G -I {input} -O {output.bam} -M {output.metrics}"
+        "gatk --java-options -Xmx{params.mem_gb}G MarkDuplicates -I {input} -O {output.bam} -M {output.metrics}"
 
 rule sort_queryname_tumor:
     input:
@@ -68,7 +68,7 @@ rule sort_queryname_tumor:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk SortSam --java-options -Xmx{params.mem_gb}G -I {input.tumorBam} -O {output} -SO queryname"
+        "gatk --java-options -Xmx{params.mem_gb}G SortSam -I {input.tumorBam} -O {output} -SO queryname"
 
 rule mark_adapters_tumor:
     input:
@@ -86,7 +86,7 @@ rule mark_adapters_tumor:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk MarkIlluminaAdapters --java-options -Xmx{params.mem_gb}G -I {input} -O {output.bam} -M {output.metrics}"
+        "gatk --java-options -Xmx{params.mem_gb}G MarkIlluminaAdapters  -I {input} -O {output.bam} -M {output.metrics}"
 
 rule mark_duplicates_tumor:
     input:
@@ -103,4 +103,4 @@ rule mark_duplicates_tumor:
     conda:
         "envs/somatic.yaml"
     shell:
-        "gatk MarkDuplicates --java-options -Xmx{params.mem_gb}G -I {input} -O {output.bam} -M {output.metrics}"
+        "gatk --java-options -Xmx{params.mem_gb}G MarkDuplicates  -I {input} -O {output.bam} -M {output.metrics}"
