@@ -42,5 +42,6 @@ include: "rules/utilities.smk"
 
 rule all:
     input:
-        expand("annotation/{tumor}.AnnFun_clinVar.vcf", tumor=config["tumor_ids"]),
+        expand("annotation/{tumor}.AnnFun_clinVar.vcf.gz", tumor=config["tumor_ids"]),
+        expand("annotation/{tumor}.AnnFun_dbSNP.vcf.gz", tumor=config["tumor_ids"]),
         "variants/Allvcf_stats.txt"
