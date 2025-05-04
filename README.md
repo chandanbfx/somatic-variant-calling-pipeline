@@ -1,10 +1,10 @@
-# 🧬 Somatic Variants Calling Pipeline
+# Somatic Variants Calling Pipeline
 
 This repository contains a modular, Snakemake-based pipeline to perform somatic variant calling from matched tumor-normal BAM files, following GATK best practices. It is designed to be scalable, reproducible, and easy to configure for different datasets.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -23,7 +23,7 @@ This repository contains a modular, Snakemake-based pipeline to perform somatic 
 
 ---
 
-## ⚙️ Requirements
+## Requirements
 
 - [Snakemake](https://snakemake.readthedocs.io/en/stable/) ≥ 7.x
 - [Conda](https://docs.conda.io/en/latest/)
@@ -32,7 +32,7 @@ This repository contains a modular, Snakemake-based pipeline to perform somatic 
 
 ---
 
-## 📥 Input Files
+## Input Files
 
 ### 1. Sample Sheet
 
@@ -59,23 +59,23 @@ Includes references to all inputs, resource allocations, database paths, and fil
 
 ---
 
-## 📦 Required Reference & Resource Files
+## Required Reference & Resource Files
 
 These are **not included in the repository** due to their size. Please download manually and place in the correct directories.
 
-### 🔬 Reference Genome (put in `reference/`)
+### Reference Genome (put in `reference/`)
 
 - Example file: `chr1.fa`
 - [Download GRCh38](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome.fa)
 
-### 🧬 Variant Databases (put in `database/`)
+### Variant Databases (put in `database/`)
 
 - dbSNP: [Download](https://ftp.ncbi.nih.gov/snp/latest_release/VCF/)
 - ClinVar: [Download](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/)
 
 Make sure you include `.tbi` index files for each VCF.
 
-### 🧰 Additional Resources (put in `resources/`)
+### Additional Resources (put in `resources/`)
 
 - gnomAD AF: [Download](https://storage.googleapis.com/gatk-best-practices/somatic-hg38/af-only-gnomad.hg38.vcf.gz)
 - 1000G PON: [Download](https://storage.googleapis.com/gatk-best-practices/somatic-hg38/1000g_pon.hg38.vcf.gz)
@@ -83,11 +83,11 @@ Make sure you include `.tbi` index files for each VCF.
 - Funcotator data sources:
   [Download v1.8 hg38](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811)
 
-> 📌 **Note**: Ensure all `.vcf.gz` files are indexed with `.tbi` and placed in the correct folders.
+> **Note**: Ensure all `.vcf.gz` files are indexed with `.tbi` and placed in the correct folders.
 
 ---
 
-## ▶️ Running the Workflow
+## Running the Workflow
 
 ### 1. Dry Run (sanity check)
 
@@ -101,11 +101,11 @@ snakemake -n
 snakemake --use-conda --cores 16
 ```
 
-> 🔄 Conda environments are defined in the `envs/` directory and will be auto-created.
+>  Conda environments are defined in the `envs/` directory and will be auto-created.
 
 ---
 
-## 📤 Output Overview
+## Output Overview
 
 - `sorted_reads/`: BAMs sorted by queryname and coordinate, adapter-marked and duplicate-removed
 - `logs/`: Log files for each processing step
@@ -114,7 +114,7 @@ snakemake --use-conda --cores 16
 
 ---
 
-## 🧾 Acknowledgements
+## Acknowledgements
 
 This pipeline integrates multiple best-in-class bioinformatics tools:
 
@@ -131,18 +131,18 @@ Special thanks to the open-source community for maintaining these tools and data
 
 ---
 
-## 🧪 Citation
+## Citation
 
 If you use this pipeline in your research, please cite the underlying tools (Snakemake, GATK, etc.) and this repository where appropriate.
 
 ---
 
-## 🤝 Contributions
+## Contributions
 
 Contributions are welcome! Feel free to open issues or submit pull requests for improvements, bug fixes, or new features.
 
 ---
 
-## 📬 Contact
+## Contact
 
 If you encounter issues or need help setting up the workflow, feel free to open an [issue](https://github.com/chndanbfx/somatic-variantsCalling-pipeline/issues) or contact the maintainer.
